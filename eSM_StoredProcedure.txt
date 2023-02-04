@@ -1,0 +1,1332 @@
+USE [StudentManagment_DB]
+GO
+/****** Object:  StoredProcedure [dbo].[SM_get_ SubjectForAllocation]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--select * from SM_m_Course where SUBJECT_ID in( 61,51,25,17,2)
+-- in (502,146,180,106)
+--select * from SM_m_Subject where SUBJECT_NAME like 'H%'
+
+--exec SM_get_StudentForSubjectAllocation 11 ,3
+
+
+ CREATE PROCEDURE [dbo].[SM_get_ SubjectForAllocation](   @STANDARDID INT,
+                                                        @STREAMID INT=NULL)
+AS
+  BEGIN TRY
+    IF(@STANDARDID<=10)
+    BEGIN
+      (
+             SELECT JSON_QUERY(
+                    (
+                           SELECT C.COURSE_ID,
+                                  C.COURSE_CODE,
+                                  C.COURSE_NAME,
+                                  C.SUBJECT_ID,
+                                  S.SUBJECT_NAME
+                           FROM   SM_M_SUBJECT S
+                           JOIN   SM_M_COURSE C
+                           ON     S.SUBJECT_ID=C.SUBJECT_ID
+                           WHERE  C.COURSE_ID IN(1,2,3,23,34) FOR JSON PATH,
+                                  INCLUDE_NULL_VALUES)) AS COMPULSARY1,
+                    JSON_QUERY(
+                    (
+                           SELECT C.COURSE_ID,
+                                  C.COURSE_CODE,
+                                  C.COURSE_NAME,
+                                  C.SUBJECT_ID,
+                                  S.SUBJECT_NAME
+                           FROM   SM_M_SUBJECT S
+                           JOIN   SM_M_COURSE C
+                           ON     S.SUBJECT_ID=C.SUBJECT_ID
+                           WHERE  C.COURSE_ID IN(24,26,27,28,29,126) FOR JSON PATH,
+                                  INCLUDE_NULL_VALUES)) AS OPTIONAL1 )FOR JSON PATH,INCLUDE_NULL_VALUES
+    END
+    ELSE
+    BEGIN
+      IF (@STREAMID=1)
+      BEGIN
+        (
+               SELECT JSON_QUERY(
+                      (
+                             SELECT 'Arts' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(1,2,126,127,133) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS COMPULSARY2,
+                      JSON_QUERY(
+                      (
+                             SELECT 'Arts' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(125,137,135,134,125,136,3) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS OPTIONAL2 )FOR JSON PATH,INCLUDE_NULL_VALUES
+      END
+      ELSE
+      IF (@STREAMID=2)
+      BEGIN
+        (
+               SELECT JSON_QUERY(
+                      (
+                             SELECT 'Commerce' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(151,153,125,114) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS COMPULSARY3,
+                      JSON_QUERY(
+                      (
+                             SELECT 'Commerce' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN (3,75) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS OPTIONAL3 )FOR JSON PATH,INCLUDE_NULL_VALUES
+      END
+      ELSE
+      IF (@STREAMID=3)
+      BEGIN
+        (
+               SELECT JSON_QUERY(
+                      (
+                             SELECT 'Medical' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(114,156,154,155) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS COMPULSARY4,
+                      JSON_QUERY(
+                      (
+                             SELECT 'Medical' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN (502,146,180,106,198) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS OPTIONAL4 )FOR JSON PATH,INCLUDE_NULL_VALUES
+	  END
+      ELSE
+      IF (@STREAMID=4)
+      BEGIN
+	  (
+	   SELECT JSON_QUERY(
+                      (
+                             SELECT 'Non-Medical' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(114,154,155,171) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS COMPULSARY5,
+                      JSON_QUERY(
+                      (
+                             SELECT 'Non-Medical' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN (502,146,180,106) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS OPTIONAL5 )FOR JSON PATH,INCLUDE_NULL_VALUES
+      END
+	   ELSE
+      BEGIN
+
+	   SELECT 'Select Stream ID'
+      END
+    END
+  END TRY
+  BEGIN CATCH
+    INSERT INTO DBO.DB_ERRORS VALUES
+                (
+                            Suser_sname(),
+                            ERROR_NUMBER(),
+                            ERROR_STATE(),
+                            ERROR_SEVERITY(),
+                            ERROR_LINE(),
+                            ERROR_PROCEDURE(),
+                            ERROR_MESSAGE(),
+                            Getdate()
+                );
+  
+  END CATCH
+GO
+/****** Object:  StoredProcedure [dbo].[SM_get_StudentsByGeneratedSRN]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- EXEC SM_get_StudentsByGeneratedSRN 'fd265a1d-7bc0-11e5-b218-3662e0ad4fd3', 76 , 12
+CREATE PROCEDURE [dbo].[SM_get_StudentsByGeneratedSRN](   @SCHOOLID   varchar(255),
+                                                  @ACADEMICID INT,
+                                                  @STANDARDID INT)
+AS
+  BEGIN TRY
+      IF NOT EXISTS(SELECT TOP(1) S.STUDENT_ID
+                    FROM   SM_t_Student_Info S
+                           JOIN SM_Admission A
+                             ON S.STUDENT_ID = A.STUDENT_ID
+                    WHERE  A.SCHOOL_ID = @SCHOOLID
+                           AND A.ACADEMICYEAR_ID = @ACADEMICID
+                           AND A.STANDARDID = @STANDARDID)
+        BEGIN
+            SELECT 'No Record Exists';
+        END
+      ELSE
+        BEGIN                                                             
+            SELECT SIT.STUDENT_REGISTRATION_NUMBER,
+                   ( CASE
+                       WHEN ISNULL(SIT.STUDENT_REGISTRATION_NUMBER, 0) = STUDENT_REGISTRATION_NUMBER THEN
+                       1
+                       ELSE 0
+                     END ) AS SRN_STATUS,
+                   SIM.LEGAL_FULL_NAME,
+                   ( CASE
+                       WHEN SBI.GENDER = 0 THEN 'Male'
+                       WHEN SBI.GENDER = 1 THEN 'Female'
+                       ELSE 'Others'
+                     END ) AS GENDER,
+                   SBI.DATE_OF_BIRTH,
+                   A.ADMISSIONDATE,
+                   FAD.LEGAL_FULL_NAME,
+                   A.STANDARDID,
+                   A.STANDARD_NAME,
+                   SBI.CATEGORY_ID,
+                   SBI.CATEGORY_NAME,
+                   A.STUDENT_ID
+            FROM   SM_t_Student_Info SIT
+                   JOIN SM_m_Student_Basic_Info SBI
+                     ON SIT.STUDENT_ID = SBI.STUDENT_ID
+                   JOIN SM_m_Student_Info SIM
+                     ON SIM.STUDENT_ID = SIT.STUDENT_ID
+                   JOIN SM_Admission A
+                     ON A.STUDENT_ID = SIM.STUDENT_ID
+                   JOIN SM_t_Family_Details FD
+                     ON FD.STUDENT_ID = A.STUDENT_ID
+                   JOIN [SM_t_Family _All_Details] FAD
+                     ON FD.R_FAMILY_DETAILS_ID = FAD.R_FAMILY_ALL_DETAILS_ID
+            WHERE  FD.RELATION_ID = 7
+                   AND A.SCHOOL_ID = @SCHOOLID
+                   AND A.ACADEMICYEAR_ID = @ACADEMICID
+                   AND A.STANDARDID = @STANDARDID
+        END
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    ERROR_NUMBER(),
+                    ERROR_STATE(),
+                    ERROR_SEVERITY(),
+                    ERROR_LINE(),
+                    ERROR_PROCEDURE(),
+                    ERROR_MESSAGE(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_get_StudentsForRollNo]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ 
+-- EXEC SM_get_StudentsForRollNo 'fd265a1d-7bc0-11e5-b218-3662e0ad4fd3', 76 , 12 ,1
+CREATE PROCEDURE [dbo].[SM_get_StudentsForRollNo]( @SCHOOLID   varchar(255),
+                                                  @ACADEMICID INT,
+                                                  @STANDARDID INT,
+												  @SECTIONID INT=null)
+AS
+  BEGIN TRY
+      IF NOT EXISTS(SELECT TOP(1) S.STUDENT_ID
+                    FROM   SM_t_Student_Info S
+                           JOIN SM_Admission A
+                             ON S.STUDENT_ID = A.STUDENT_ID
+                    WHERE  A.SCHOOL_ID = @SCHOOLID
+                           AND A.ACADEMICYEAR_ID = @ACADEMICID
+                           AND A.STANDARDID = @STANDARDID
+						   AND A.SECTION_ID=@SECTIONID)
+        BEGIN
+            SELECT 'No Record Exists';
+        END
+      ELSE
+        BEGIN
+            SELECT SIT.STUDENT_REGISTRATION_NUMBER,
+                   SIM.LEGAL_FULL_NAME,
+                   ( CASE
+                       WHEN SBI.GENDER = 0 THEN 'Male'
+                       WHEN SBI.GENDER = 1 THEN 'Female'
+                       ELSE 'Others'
+                     END ) AS GENDER,
+                   SBI.DATE_OF_BIRTH,
+				   --ASQ.ADMISSIONSEQUENCE_NUMBER,
+                   A.ADMISSIONDATE,
+                   FAD.LEGAL_FULL_NAME,
+                   A.STANDARDID,
+                   A.STANDARD_NAME,
+				   A.SECTION_ID,
+				   A.SECTION_NAME,
+                   SBI.CATEGORY_ID,
+                   SBI.CATEGORY_NAME,
+                   A.STUDENT_ID
+            FROM   SM_t_Student_Info SIT
+                   JOIN SM_m_Student_Basic_Info SBI
+                     ON SIT.STUDENT_ID = SBI.STUDENT_ID
+                   JOIN SM_m_Student_Info SIM
+                     ON SIM.STUDENT_ID = SIT.STUDENT_ID
+                   JOIN SM_Admission A
+                     ON A.STUDENT_ID = SIM.STUDENT_ID
+                   JOIN SM_t_Family_Details FD
+                     ON FD.STUDENT_ID = A.STUDENT_ID
+                   JOIN [SM_t_Family _All_Details] FAD
+                     ON FD.R_FAMILY_DETAILS_ID = FAD.R_FAMILY_ALL_DETAILS_ID
+				   --JOIN SM_Admission_Sequence ASQ
+				   --on ASQ.STUDENT_ID=A.STUDENT_ID
+
+            WHERE  FD.RELATION_ID = 7
+			       AND A.SCHOOL_ID = @SCHOOLID
+                   AND A.ACADEMICYEAR_ID = @ACADEMICID
+                   AND A.STANDARDID = @STANDARDID
+				   AND A.SECTION_ID=@SECTIONID
+				   AND ISNULL(SIT.STUDENT_REGISTRATION_NUMBER,0)=SIT.STUDENT_REGISTRATION_NUMBER
+				   AND ISNULL(A.SECTION_ID,0)=A.SECTION_ID
+        END
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    ERROR_NUMBER(),
+                    ERROR_STATE(),
+                    ERROR_SEVERITY(),
+                    ERROR_LINE(),
+                    ERROR_PROCEDURE(),
+                    ERROR_MESSAGE(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_get_StudentsForSubjects]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ 
+-- EXEC SM_get_StudentsForSubjects 'fd265a1d-7bc0-11e5-b218-3662e0ad4fd3', 76 , 12 ,null
+CREATE PROCEDURE [dbo].[SM_get_StudentsForSubjects](   @SCHOOLID   varchar(255),
+                                                  @ACADEMICID INT,
+                                                  @STANDARDID INT,
+												  @SECTIONID INT=null)
+AS
+  BEGIN TRY
+      IF NOT EXISTS(SELECT TOP(1) S.STUDENT_ID
+                    FROM   SM_t_Student_Info S
+                           JOIN SM_Admission A
+                             ON S.STUDENT_ID = A.STUDENT_ID
+                    WHERE  A.SCHOOL_ID = @SCHOOLID
+                           AND A.ACADEMICYEAR_ID = @ACADEMICID
+                           AND A.STANDARDID = @STANDARDID)
+        BEGIN
+            SELECT 'No Record Exists';
+        END
+      ELSE
+        BEGIN
+            SELECT SIT.STUDENT_REGISTRATION_NUMBER,
+                   SIM.LEGAL_FULL_NAME,
+                   ( CASE
+                       WHEN SBI.GENDER = 0 THEN 'Male'
+                       WHEN SBI.GENDER = 1 THEN 'Female'
+                       ELSE 'Others'
+                     END ) AS GENDER,
+                   SBI.DATE_OF_BIRTH,
+				   --ASQ.ADMISSIONSEQUENCE_NUMBER,
+                   A.ADMISSIONDATE,
+                   FAD.LEGAL_FULL_NAME,
+                   A.STANDARDID,
+                   A.STANDARD_NAME,
+				   A.SECTION_ID,
+				   A.SECTION_NAME,
+                   SBI.CATEGORY_ID,
+                   SBI.CATEGORY_NAME,
+                   A.STUDENT_ID
+            FROM   SM_t_Student_Info SIT
+                   JOIN SM_m_Student_Basic_Info SBI
+                     ON SIT.STUDENT_ID = SBI.STUDENT_ID
+                   JOIN SM_m_Student_Info SIM
+                     ON SIM.STUDENT_ID = SIT.STUDENT_ID
+                   JOIN SM_Admission A
+                     ON A.STUDENT_ID = SIM.STUDENT_ID
+                   JOIN SM_t_Family_Details FD
+                     ON FD.STUDENT_ID = A.STUDENT_ID
+                   JOIN [SM_t_Family _All_Details] FAD
+                     ON FD.R_FAMILY_DETAILS_ID = FAD.R_FAMILY_ALL_DETAILS_ID
+				   --JOIN SM_Admission_Sequence ASQ
+				   --on ASQ.STUDENT_ID=A.STUDENT_ID
+
+            WHERE  FD.RELATION_ID = 7
+			       AND A.SCHOOL_ID = @SCHOOLID
+                   AND A.ACADEMICYEAR_ID = @ACADEMICID
+                   AND A.STANDARDID = @STANDARDID
+				   AND ISNULL(SIT.STUDENT_REGISTRATION_NUMBER,0)=SIT.STUDENT_REGISTRATION_NUMBER
+				   -- AND ISNULL(A.SECTION_ID,0)=A.SECTION_ID                  CHECK: if subject allocated to those student whose section is allocated
+
+        END
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    ERROR_NUMBER(),
+                    ERROR_STATE(),
+                    ERROR_SEVERITY(),
+                    ERROR_LINE(),
+                    ERROR_PROCEDURE(),
+                    ERROR_MESSAGE(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_get_SubjectForAllocation]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--exec SM_get_SubjectForAllocation 11 ,3
+ CREATE PROCEDURE [dbo].[SM_get_SubjectForAllocation](   @STANDARDID INT,
+                                                        @STREAMID INT=NULL)
+AS
+  BEGIN TRY
+    IF(@STANDARDID<=10)
+    BEGIN
+      (
+             SELECT JSON_QUERY(
+                    (
+                           SELECT C.COURSE_ID,
+                                  C.COURSE_CODE,
+                                  C.COURSE_NAME,
+                                  C.SUBJECT_ID,
+                                  S.SUBJECT_NAME
+                           FROM   SM_M_SUBJECT S
+                           JOIN   SM_M_COURSE C
+                           ON     S.SUBJECT_ID=C.SUBJECT_ID
+                           WHERE  C.COURSE_ID IN(1,2,3,23,34) FOR JSON PATH,
+                                  INCLUDE_NULL_VALUES)) AS COMPULSARY1,
+                    JSON_QUERY(
+                    (
+                           SELECT C.COURSE_ID,
+                                  C.COURSE_CODE,
+                                  C.COURSE_NAME,
+                                  C.SUBJECT_ID,
+                                  S.SUBJECT_NAME
+                           FROM   SM_M_SUBJECT S
+                           JOIN   SM_M_COURSE C
+                           ON     S.SUBJECT_ID=C.SUBJECT_ID
+                           WHERE  C.COURSE_ID IN(24,26,27,28,29,126) FOR JSON PATH,
+                                  INCLUDE_NULL_VALUES)) AS OPTIONAL1 )FOR JSON PATH,INCLUDE_NULL_VALUES
+    END
+    ELSE
+    BEGIN
+      IF (@STREAMID=1)
+      BEGIN
+        (
+               SELECT JSON_QUERY(
+                      (
+                             SELECT 'Arts' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(1,2,126,127,133) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS COMPULSARY2,
+                      JSON_QUERY(
+                      (
+                             SELECT 'Arts' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(125,137,135,134,125,136,3) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS OPTIONAL2 )FOR JSON PATH,INCLUDE_NULL_VALUES
+      END
+      ELSE
+      IF (@STREAMID=2)
+      BEGIN
+        (
+               SELECT JSON_QUERY(
+                      (
+                             SELECT 'Commerce' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(151,153,125,114) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS COMPULSARY3,
+                      JSON_QUERY(
+                      (
+                             SELECT 'Commerce' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN (3,75) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS OPTIONAL3 )FOR JSON PATH,INCLUDE_NULL_VALUES
+      END
+      ELSE
+      IF (@STREAMID=3)
+      BEGIN
+        (
+               SELECT JSON_QUERY(
+                      (
+                             SELECT 'Medical' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(114,156,154,155) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS COMPULSARY4,
+                      JSON_QUERY(
+                      (
+                             SELECT 'Medical' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN (502,146,180,106,198) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS OPTIONAL4 )FOR JSON PATH,INCLUDE_NULL_VALUES
+	  END
+      ELSE
+      IF (@STREAMID=4)
+      BEGIN
+	  (
+	   SELECT JSON_QUERY(
+                      (
+                             SELECT 'Non-Medical' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN(114,154,155,171) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS COMPULSARY5,
+                      JSON_QUERY(
+                      (
+                             SELECT 'Non-Medical' AS STREAM,
+                                    C.COURSE_ID,
+                                    C.COURSE_CODE,
+                                    C.COURSE_NAME,
+                                    C.SUBJECT_ID,
+                                    S.SUBJECT_NAME
+                             FROM   SM_M_SUBJECT S
+                             JOIN   SM_M_COURSE C
+                             ON     S.SUBJECT_ID=C.SUBJECT_ID
+                             WHERE  C.COURSE_ID IN (502,146,180,106) FOR JSON PATH,
+                                    INCLUDE_NULL_VALUES)) AS OPTIONAL5 )FOR JSON PATH,INCLUDE_NULL_VALUES
+      END
+	   ELSE
+      BEGIN
+
+	   SELECT 'Select Stream ID'
+      END
+    END
+  END TRY
+  BEGIN CATCH
+    INSERT INTO DBO.DB_ERRORS VALUES
+                (
+                            Suser_sname(),
+                            ERROR_NUMBER(),
+                            ERROR_STATE(),
+                            ERROR_SEVERITY(),
+                            ERROR_LINE(),
+                            ERROR_PROCEDURE(),
+                            ERROR_MESSAGE(),
+                            Getdate()
+                );
+  
+  END CATCH
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_Bank]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_Bank]
+AS
+  BEGIN TRY
+      SELECT  B.BANK_ID,B.BANK_NAME,B.BANK_TYPE_ID
+      FROM   SM_m_Bank B;
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_BankBranchByBank]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_BankBranchByBank]
+(@BANKID INT=NULL)
+AS
+  BEGIN TRY
+      SELECT  *
+      FROM   SM_m_Bank_Branch BB
+	  WHERE BB.BANK_ID=(CASE WHEN @BANKID IS NULL THEN BB.BANK_ID ELSE @BANKID END);
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_Catagory]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_Catagory] 
+AS
+  BEGIN TRY
+      SELECT *
+      FROM   SM_m_Category C
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_CityByTehsil]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_CityByTehsil](
+@TEHSILID INT=NULL)
+AS
+  BEGIN TRY
+      SELECT *
+      FROM   SM_m_City C
+	  WHERE C.TEHSIL_ID =(CASE WHEN @TEHSILID IS NULL THEN C.TEHSIL_ID ELSE @TEHSILID END) 
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_ClassBySchool]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- EXEC SM_sp_get_ClassBySchool '013ee0d9-9b3c-4990-9fc4-135fdc104121'
+CREATE PROCEDURE [dbo].[SM_sp_get_ClassBySchool] (@SCHOOLID VARCHAR(255)=NULL)
+AS
+  BEGIN TRY
+      IF NOT EXISTS (SELECT TOP(1) SD.SCHOOL_ID
+                     FROM   SM_t_School_Details SD
+                     WHERE  SD.SCHOOL_ID = @SCHOOLID)
+        BEGIN
+            SELECT S.STANDARD_ID,
+                   S.STANDARD_NAME,
+                   S.MIN_APPROPRIATE_AGE,
+                   S.MAX_APPROPRIATE_AGE,
+                   S.CREATED_BY
+            FROM   SM_m_Standard S
+        END
+      ELSE
+        BEGIN
+            SELECT DISTINCT S.STANDARD_ID,
+                            S.STANDARD_NAME,
+                            S.WING_LEVEL_ID,
+                            SD.SCHOOL_CATEGORY_NAME,
+                            S.MIN_APPROPRIATE_AGE,
+                            S.MAX_APPROPRIATE_AGE,
+                            S.CREATED_BY
+            FROM   SM_t_School_Details SD
+                   INNER JOIN SM_m_Standard S
+                           ON S.WING_LEVEL_ID <= SD.SCHOOL_CATEGORY_ID
+            WHERE  SD.SCHOOL_ID = @SCHOOLID
+        
+        END
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_ERRORS
+      VALUES      ( Suser_sname(),
+                    ERROR_NUMBER(),
+                    ERROR_STATE(),
+                    ERROR_SEVERITY(),
+                    ERROR_LINE(),
+                    ERROR_PROCEDURE(),
+                    ERROR_MESSAGE(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_Country]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_Country]
+AS
+  BEGIN TRY
+      SELECT *
+      FROM   SM_m_Country;
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_Disability]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_Disability] 
+AS
+  BEGIN TRY
+      SELECT *
+      FROM   SM_m_Disability D
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_DistrictByState]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_DistrictByState](
+@STATEID INT=NULL)
+AS
+  BEGIN TRY
+      SELECT *
+      FROM   SM_m_District D
+	  WHERE D.STATE_ID=(CASE WHEN @STATEID IS NULL THEN D.STATE_ID ELSE @STATEID END) 
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_Occupations]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_Occupations]
+AS
+  BEGIN TRY
+      SELECT  O.OCCUPTIONS_ID, O.NAME
+      FROM   SM_m_Occupations O;
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_Qualification]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_Qualification]
+AS
+  BEGIN TRY
+      SELECT  Q.qualificationsId,Q.NAME
+      FROM   SM_m_Qualification Q;
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_Religion]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_Religion]
+AS
+  BEGIN TRY
+      SELECT  R.RELIGION_ID,R.RELIGION_NAME
+      FROM   SM_m_Religion R;
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_Salutation]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_Salutation] 
+AS
+  BEGIN TRY
+      SELECT *
+      FROM   SM_m_Salutation S
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_SectionByClass]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_SectionByClass] (@SCHOOLID VARCHAR(255),
+@ACADEMICYEAR  INT,
+@STANDARD      INT,
+@STREAM        INT=NULL
+ )
+AS
+  BEGIN TRY
+    IF NOT EXISTS
+    (
+           SELECT TOP(1)
+                  SD.SCHOOL_ID
+           FROM   SM_M_SECTION SD
+           WHERE  SD.SCHOOL_ID = @SCHOOLID
+           AND    SD.STANDARD_ID=@STANDARD
+           AND    SD.ACADEMICYEAR_ID=@ACADEMICYEAR)
+    BEGIN
+      SELECT 'No Record Found!!'
+    END
+    ELSE
+    BEGIN
+      IF (@STREAM>0)
+      BEGIN
+        SELECT S.SECTION_ID,
+               S.SECTION_NAME,
+               (
+                      SELECT CONCAT(S.SECTION_NAME,'-',L.LANGUAGE_NAME)) AS SECTIONFULLNAME,
+               S.STANDARD_ID,
+               S.STREAM_ID,
+               S.MEDIUM_OF_INSTRUCTION_ID,
+               L.LANGUAGE_NAME,
+               S.SCHOOL_ID,
+               S.ACADEMICYEAR_ID
+        FROM   SM_M_SECTION S
+        JOIN   SM_M_LANGUAGES L
+        ON     S.MEDIUM_OF_INSTRUCTION_ID = L.LANGUAGE_ID
+          WHERE  S.SCHOOL_ID = @SCHOOLID
+        AND    S.STANDARD_ID=@STANDARD
+        AND    S.ACADEMICYEAR_ID=@ACADEMICYEAR
+		AND    S.STREAM_ID=@STREAM
+      END
+      ELSE
+      BEGIN
+        SELECT S.SECTION_ID,
+               S.SECTION_NAME,
+               (
+                      SELECT CONCAT(S.SECTION_NAME,'-',L.LANGUAGE_NAME)) AS SECTIONFULLNAME,
+               S.STANDARD_ID,
+               S.STREAM_ID,
+               S.MEDIUM_OF_INSTRUCTION_ID,
+               L.LANGUAGE_NAME,
+               S.SCHOOL_ID,
+               S.ACADEMICYEAR_ID
+        FROM   SM_M_SECTION S
+        JOIN   SM_M_LANGUAGES L
+        ON     S.MEDIUM_OF_INSTRUCTION_ID = L.LANGUAGE_ID
+        WHERE  S.SCHOOL_ID = @SCHOOLID
+        AND    S.STANDARD_ID=@STANDARD
+        AND    S.ACADEMICYEAR_ID=@ACADEMICYEAR
+        
+      END
+	  END
+    END TRY
+    BEGIN CATCH
+      INSERT INTO DBO.DB_ERRORS VALUES
+                  (
+                              Suser_sname(),
+                              ERROR_NUMBER(),
+                              ERROR_STATE(),
+                              ERROR_SEVERITY(),
+                              ERROR_LINE(),
+                              ERROR_PROCEDURE(),
+                              ERROR_MESSAGE(),
+                              Getdate()
+                  );
+    
+    END CATCH
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_StateByCountry]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_StateByCountry](
+@COUNTRYID INT=NULL)
+AS
+  BEGIN TRY
+      SELECT *
+      FROM   SM_m_State S
+	  WHERE S.COUNTRY_ID=( CASE WHEN @COUNTRYID IS NULL THEN S.COUNTRY_ID ELSE  @COUNTRYID END) ;
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH 
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_get_TehsilByDistrict]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_get_TehsilByDistrict](
+@DISTRICTID INT=NULL)
+AS
+  BEGIN TRY
+      SELECT *
+      FROM   SM_m_Tehsil T
+	  WHERE T.DISTRICTID=(CASE WHEN @DISTRICTID IS NULL THEN T.DISTRICTID ELSE @DISTRICTID END) 
+  END TRY
+
+  BEGIN CATCH
+      INSERT INTO DBO.DB_Errors
+      VALUES      ( Suser_sname(),
+                    Error_number(),
+                    Error_state(),
+                    Error_severity(),
+                    Error_line(),
+                    Error_procedure(),
+                    Error_message(),
+                    Getdate() );
+  END CATCH
+GO
+/****** Object:  StoredProcedure [dbo].[SM_sp_login_Teacher]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SM_sp_login_Teacher] (@EMPCODE Varchar(255)=NULL)
+AS
+  BEGIN TRY
+    IF NOT EXISTS
+    (
+           SELECT TOP(1)
+                  T.EMPLOYEE_CODE
+           FROM   SM_T_TEACHERS T
+           WHERE  T.EMPLOYEE_CODE=@EMPCODE)
+    BEGIN
+      SELECT 'No Record Found' AS RESULT;
+    
+    END
+    ELSE
+    BEGIN
+      DECLARE @DATE date;
+      SET @DATE = getdate();
+        
+             (SELECT JSON_QUERY((
+                           SELECT SD.NAME,
+                                  SD.SCHOOL_CODE,
+                                  SD.FK_SCHOOL_TYPE_ID,
+                                  SD.SCHOOL_OWNER_ID,
+                                  SD.SCHOOL_ID,
+                                  SD.FK_AFFILIATING_BOARD_ID,
+                                  SD.RECOGNITION_TYPE_ID,
+                                  SD.SCHOOL_CATEGORY_ID,
+                                  SD.SCHOOL_CATEGORY_NAME
+                           FROM   SM_T_TEACHERS T
+                           JOIN   SM_t_School_Details SD
+                           ON     T.CURRENT_SCHOOL_ID=SD.SCHOOL_ID
+                           WHERE  T.EMPLOYEE_CODE=@EMPCODE FOR JSON PATH,
+                                  INCLUDE_NULL_VALUES,
+                                  WITHOUT_ARRAY_WRAPPER )) AS SCHOOLDETAILS,
+					
+					JSON_QUERY((     
+					       SELECT A.ACADEMIC_YEAR_ID,
+							      A.ACADEMIC_YEAR_ALIAS,
+							      A.CREATED_BY
+						   FROM SM_m_AcademicYear as A 
+					       WHERE   @DATE>=A.START_DATE and @DATE<=A.END_DATE  FOR JSON PATH,
+						   INCLUDE_NULL_VALUES,
+                                  WITHOUT_ARRAY_WRAPPER )) AS ACADEMICYEARDETAILS,
+                    JSON_QUERY((
+                           SELECT T.R_EMPLOYEE_ID,
+                                  T.EMPLOYEE_CODE,
+                                  T.CREATED_BY,
+                                  T.CREATED_ON,
+                                  T.CURRENT_JOB_POSITION_ID,
+                                  T.CURRENT_SCHOOL_ID
+                           FROM   SM_t_Teachers T
+                           WHERE  T.EMPLOYEE_CODE = @EMPCODE FOR JSON PATH,
+                                  INCLUDE_NULL_VALUES,
+                                  WITHOUT_ARRAY_WRAPPER )) AS TEACHERDETAILS) FOR JSON PATH,INCLUDE_NULL_VALUES,WITHOUT_ARRAY_WRAPPER
+    END
+  END TRY
+  BEGIN CATCH
+    INSERT INTO DBO.DB_ERRORS VALUES
+                (
+                            Suser_sname(),
+                            ERROR_NUMBER(),
+                            ERROR_STATE(),
+                            ERROR_SEVERITY(),
+                            ERROR_LINE(),
+                            ERROR_PROCEDURE(),
+                            ERROR_MESSAGE(),
+                            Getdate()
+                );
+  
+  END CATCH
+ 
+ 
+GO
+/****** Object:  StoredProcedure [dbo].[sp_del_task]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create proc [dbo].[sp_del_task](
+@id int)
+as
+begin
+declare @result varchar(30)
+delete from TaskTable where taskID=@id
+set @result='Success'
+select @result
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_allFormDetails]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[sp_get_allFormDetails]
+  AS
+  BEGIN
+  select * from TestFormTableDec30 
+  END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_task]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create proc [dbo].[sp_get_task] 
+as
+begin 
+select * from TaskTable 
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sp_getbyId_FormDetails]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[sp_getbyId_FormDetails]
+  (
+  @id int)
+  AS
+  BEGIN
+  select * from TestFormTableDec30 where id=@id
+  END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_gettodayleave]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE Procedure [dbo].[sp_gettodayleave]
+@date datetime
+
+as
+begin
+
+select * from  LeaveMst where convert(varchar,EDate,23) = convert(varchar,@date,23) 
+
+
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ins_Task]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[sp_ins_Task](
+@title varchar(250),
+@discription varchar(250),
+@deadline date)
+as
+begin
+declare @result varchar(30)
+insert into TaskTable(taskTitle,taskDescription,taskDeadline,CreatedDate)
+values(@title,@discription,@deadline,GETDATE())
+set @result='Success'
+select @result
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sp_test_form]    Script Date: 2/4/2023 4:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROC [dbo].[sp_test_form]( @Email VARCHAR(50),  
+@pass                                   VARCHAR(250),  
+@AI                                     VARCHAR(250),  
+@AII                                    VARCHAR(250),  
+@Country                                INT,  
+@state                                  INT,  
+@distt                                  INT,  
+@teh                                    INT,  
+@vill                                   INT,  
+@PIN                                    float)  
+AS  
+  BEGIN  
+    DECLARE @CountryName VARCHAR(100)=  
+    (  
+           SELECT COUNTRYNAME  
+           FROM   SM_m_Country  
+           WHERE  COUNTRY_ID=@Country);  
+    DECLARE @stateName VARCHAR(100)=  
+    (  
+           SELECT STATE_NAME  
+           FROM   SM_m_State  
+           WHERE  STATE_ID=@state);  
+    DECLARE @disttName VARCHAR(100)=  
+    (  
+           SELECT DISTRICT_NAME  
+           FROM   SM_m_District  
+           WHERE  DISTRICT_ID=@distt);  
+    DECLARE @tehName VARCHAR(100)=  
+    (  
+           SELECT TEHSILNAME  
+           FROM   SM_m_Tehsil  
+           WHERE  TEHSIL_ID=@teh);  
+    DECLARE @villName VARCHAR(100)=  
+    (  
+           SELECT CITY_NAME  
+           FROM   SM_m_City  
+           WHERE  CITY_ID=@vill);  
+    INSERT INTO TestFormTableDec30 VALUES  
+                (  
+                            @Email,  
+                            @pass,  
+                            @AI,  
+                            @AII,  
+                            @Country,  
+                            @CountryName,  
+                            @state,  
+                            @stateName,  
+                            @distt,  
+                            @disttName,  
+                            @teh,  
+                            @tehName,  
+                            @vill,  
+                            @villName,  
+                            @PIN  
+                )  
+    DECLARE @id INT;  
+    SET @id=  
+    (  
+             SELECT TOP(1)  
+                      id  
+             FROM     TestFormTableDec30  
+             ORDER BY id DESC  
+    )  
+       
+    DECLARE @result VARCHAR(250);  
+    SET @result=  
+    (  
+           SELECT JSON_QUERY(  
+                  (  
+                         SELECT tf.email,  
+                                tF.Password,  
+                                tF.CountryId,  
+                                sC.COUNTRYNAME,  
+                                tF.StateId,  
+                                sS.STATE_NAME,  
+                                tF.DisttId,  
+                                sD.DISTRICT_NAME,  
+                                tF.TehsilId,  
+                                sT.TEHSILNAME,  
+                                tF.VillageId,  
+                                sCty.CITY_NAME,  
+                                tF.ZipCode     
+           FROM   TestFormTableDec30 tF  
+           JOIN   SM_m_Country sC  
+           ON     tF.CountryId=sC.COUNTRY_ID  
+           JOIN   SM_m_State sS  
+           ON     tF.StateId=sS.STATE_ID  
+           JOIN   SM_m_District sD  
+           ON     tF.DisttId=SD.DISTRICT_ID  
+           JOIN   SM_m_Tehsil sT  
+           ON     tF.TehsilId=sT.TEHSIL_ID  
+           JOIN   SM_m_City sCty  
+           ON     tF.VillageId=sCty.CITY_ID  
+           WHERE  id=3 FOR JSON PATH,  
+                  INCLUDE_NULL_VALUES,  
+                  WITHOUT_ARRAY_WRAPPER )))  
+    SELECT @result  
+  END
+GO
