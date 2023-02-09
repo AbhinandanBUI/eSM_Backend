@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // DI Services 
 builder.Services.AddTransient<IDapperConnection, DapperConnection>();
 builder.Services.AddTransient<ICommonAPI, SCommonAPI>();
+builder.Services.AddTransient<IMasterCommon, SMasterCommon>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

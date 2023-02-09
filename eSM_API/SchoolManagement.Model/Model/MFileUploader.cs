@@ -9,5 +9,6 @@ namespace SchoolManagement.Model.Model
         public int FileSize { get; set; }
         public string? FileType { get; set; }
         public IFormFile formFile { get; set; }
+
     }
 }
