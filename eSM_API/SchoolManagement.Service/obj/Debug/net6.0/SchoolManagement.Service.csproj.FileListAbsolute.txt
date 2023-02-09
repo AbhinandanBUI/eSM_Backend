@@ -1,0 +1,15 @@
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\bin\Debug\net6.0\SchoolManagement.Service.deps.json
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\bin\Debug\net6.0\SchoolManagement.Service.dll
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\bin\Debug\net6.0\SchoolManagement.Service.pdb
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\bin\Debug\net6.0\SchoolManagement.Model.dll
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\bin\Debug\net6.0\SchoolManagement.Model.pdb
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\SchoolManagement.Service.csproj.AssemblyReference.cache
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\SchoolManagement.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\SchoolManagement.Service.AssemblyInfoInputs.cache
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\SchoolManagement.Service.AssemblyInfo.cs
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\SchoolManagement.Service.csproj.CoreCompileInputs.cache
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\SchoolManagement.Service.csproj.CopyComplete
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\SchoolManagement.Service.dll
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\refint\SchoolManagement.Service.dll
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\SchoolManagement.Service.pdb
+D:\MyProject\Git\eSM\eSM_API\SchoolManagement.Service\obj\Debug\net6.0\ref\SchoolManagement.Service.dll
